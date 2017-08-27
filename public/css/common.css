@@ -1,0 +1,30 @@
+ul,li,form {
+    padding:0;
+    border:0;
+    margin: 0;
+}
+.f-r {
+    float: right;
+}
+.f-l {
+    float: left;
+}
+.focus {
+    cursor: pointer;
+}
+.rel {
+    position: relative;
+}
+.abs {
+    position: absolute;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+/*公共颜色*/
+.blue {
+    color: #39c;
+}

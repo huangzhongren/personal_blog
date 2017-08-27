@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+}
+.authentication {
+    width: 300px;
+    height: auto;
+    text-align: center;
+}
+.authentication>*{
+    width: 100%;
+    height: 28px;
+    margin-bottom: 10px;
+}
+
+.authentication .input-group {
+    display: flex;
+    justify-content: space-between;
+}
+.authentication label {
+}
+.input-group input {
+    width: 75%
+}
+.col_warning {
+    text-align: left;
+    color: red;
+}
