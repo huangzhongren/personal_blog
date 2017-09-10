@@ -17,30 +17,26 @@ var User = require('./models/user.js');
 //定义模板引擎
 app.engine('html',swig.renderFile);
 app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'node_modules')));
 app.set('views','./views');//设置模板文件存放目录
 app.set('view engine','html');
 swig.setDefaults({cache:false});
 app.use(bodyParser.urlencoded({extended: true}));
 
-//创建连接数据库实例化对象
-mongoose.connect('mongodb://localhost:27017/blog',{useMongoClient:true},function(err){
-    if(err) {
-        console.log('连接失败')
-    }else {
-        console.log('连接成功')
-    }
-})
+mongoose.Promise = global.Promise;
 
 //设置cookie
 app.use(cookieParser());
-//根据不同的功能划分模块
+
 app.use(session({
     secret:'12345',
-    cookie:{maxAge:60000},
+    cookie:{maxAge:6000000},
     resave:false,
     saveUninitialized:true,
     store: new MongoStore({
-       mongooseConnection:mongoose.connection
+        // url:'mongodb://localhost:27017/blog',
+        // touchAfter: 24*3600, //lazy session update
+        mongooseConnection:mongoose.connection
     })
 }))
 //路由拦截
@@ -57,12 +53,18 @@ app.use(function(req,res,next){
         next();
     }
 })
-
+//根据不同的功能划分模块
 app.use('/admin',require('./routers/admin'))
 app.use('/api',require('./routers/api'))
 app.use('/',require('./routers/index'))
 
-
-
-//监听请求
-app.listen(8888);
+//创建连接数据库实例化对象
+mongoose.connect('mongodb://localhost:27017/blog',{useMongoClient:true},function(err){
+    if(err) {
+        console.log('连接失败')
+    }else {
+        console.log('连接成功')
+        //监听请求
+        app.listen(8888);
+    }
+})

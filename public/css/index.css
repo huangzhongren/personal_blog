@@ -25,3 +25,12 @@ h1{
     text-align: left;
     color: red;
 }
+
+.nav-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.tableInfo {
+    margin-right: 60px;
+}

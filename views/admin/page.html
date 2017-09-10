@@ -1,0 +1,15 @@
+<nav aria-label="..." class="nav-pagination">
+    <div class="tableInfo">
+        一共有{{count}}条数据，每页显示{{limit}}条，一共{{pages}}页，当前第{{page}}页。
+    </div>
+    <ul class="pagination">
+        <li><a href="/admin/user?page={{page-1}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">2 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">3 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">4 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">5 <span class="sr-only">(current)</span></a></li>
+        <li><a href="/admin/user?page={{page+1}}" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</nav>
