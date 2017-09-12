@@ -5,6 +5,7 @@
 var router = require('express').Router();
 var User = require('../models/user.js');
 var Category = require('../models/category.js');
+var Content = require('../models/contents.js');
 
 router.use(function(req,res,next){
     if(!req.session.user.isAdmin){
@@ -56,7 +57,7 @@ router.get('/category',function(req,res){
         page = Math.min(page,pages);
         page = Math.max(page,1);
         var skip = (page-1)*limit;
-        Category.find().limit(limit).skip(skip).then(function(categories){
+        Category.find().sort({_id:-1}).limit(limit).skip(skip).then(function(categories){
             res.render('admin/category_index',{
                 user:req.session.user,
                 categories:categories,
@@ -224,5 +225,82 @@ router.get('/category/delete',function(req,res){
             })
         }
     })
+})
+/*
+* 内容首页
+*
+* */
+router.get('/content',function(req,res){
+    var page = Number(req.query.page || 1);
+    var limit = 4;
+    var pages = 0;
+    Content.count().then(function(count){
+        pages = Math.ceil(count/limit);
+        page = Math.min(page,pages);
+        page = Math.max(page,1);
+        var skip = (page-1)*limit;
+        Content.find().limit(limit).skip(skip).then(function(contents){
+            res.render('admin/content_index',{
+                user:req.session.user,
+                contents:contents,
+                page: page,
+                count: count,
+                pages:pages,
+                limit: limit,
+            })
+        })
+    })
+
+
+})
+/*
+* 内容添加页面
+* */
+router.get('/content/add',function(req,res){
+
+
+    Category.find().sort({_id:-1}).then(function(categories){
+        res.render('admin/content_add',{
+            user:req.session.user,
+            categories:categories
+        })
+    })
+})
+/*
+*
+* 内容保存
+* */
+router.post('/content/add',function(req,res){
+    console.log(req.body)
+    if(req.body.category == ''){
+        res.render('admin/error',{
+            user: req.session.user,
+            message:'内容分类不能为空'
+        })
+        return;
+    }
+    if(req.body.title == ''){
+        res.render('admin/error',{
+            user: req.session.user,
+            message:'内容标题不能为空'
+        })
+        return;
+    }
+    //保存数据到数据库
+    new Content({
+        category: req.body.category,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content
+    }).save().then(function(rs){
+        if(rs){
+            res.render('admin/success',{
+                user: req.session.user,
+                message:'内容保存成功',
+                url:'/admin/content'
+            })
+        }
+    })
+
 })
 module.exports = router;
