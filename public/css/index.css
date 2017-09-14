@@ -34,3 +34,12 @@ h1{
 .tableInfo {
     margin-right: 60px;
 }
+/*文章副标题样式*/
+
+.article-info {
+    padding: 10px 0;
+
+}
+.article-info span {
+    margin-right: 20px;
+}

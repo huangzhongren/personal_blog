@@ -41,7 +41,8 @@ app.use(session({
 }))
 //路由拦截
 app.use(function(req,res,next){
-    if(!req.session.user && req.url!=='/' && req.url!=='/api/user/login' && req.url!=='/api/user/register'){
+    var url1 = req.url.split('/')[1];
+    if(!req.session.user && req.url!=='/' && !/^api|view|\?/.test(url1)){
         return res.redirect('/');
     }else if(req.session.user){
         //查询是否是管理员

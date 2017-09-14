@@ -4,6 +4,7 @@
 
 var router = require('express').Router();
 var User = require('../models/user');
+var Content = require('../models/Contents')
 //定义统一返回格式
 var responseData;
 router.use(function(req,res,next){
@@ -104,5 +105,26 @@ router.post('/user/login',function(req,res,next){
 router.get('/user/logout',function(req,res,next){
     req.session.user = null;
     return res.redirect('/');
+})
+/*
+ * 评论的提交
+ * */
+router.post('/comment/post',function(req,res){
+    var contentId = req.body.contentId||'';
+    var postData = {
+        username: req.session.user.username,
+        postTime:new Date(),
+        content:req.body.content,
+    }
+    Content.findOne({
+        _id:contentId
+    }).then(function(content){
+        content.comments.unshift(postData);
+        return content.save();
+    }).then(function(newContent){
+        responseData.message = '评论成功';
+        responseData.data = newContent;
+        res.json(responseData)
+    })
 })
 module.exports = router;

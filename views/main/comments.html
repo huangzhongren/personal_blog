@@ -1,0 +1,23 @@
+<h3>评论 <span class="pull-right font-small">一共4条评论</span></h3>
+
+
+{% if user._id %}
+    {% if content.comments.length>0 %}
+        {% for comment in content.comments %}
+        <div class="comment m-t-20">
+            <div class="comments-user">{{comment.username}}</div>
+            <div class="comments-user pull-right font-small">{{comment.postTime|date('Y-m-d H:i:s',-8*60)}}</div>
+            <div class="comment-content">{{comment.content}}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div>还没有留言</div>
+    {% endif %}
+<textarea name="comment" id="comment-input" rows="8" class="form-control m-t-30"></textarea>
+<input type="hidden" id="contentId" value="{{content._id.toString()}}">
+<input type="submit" value="提交" class="btn-primary pull-right m-t-20" id="comment-submit">
+{% else %}
+<button class="btn-lg btn-block btn-warning" onclick="window.location.href='/'">
+    您还没有登录，请先 <a href="">登录</a>或 <a href="">注册</a>
+</button>
+{% endif %}

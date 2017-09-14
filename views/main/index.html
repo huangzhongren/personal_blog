@@ -2,7 +2,41 @@
 {% block main %}
 <div class="container">
     <div class="col-xs-9">
-        <h2 class="article">最近更新</h2>
+        <div class="article-box row">
+            {% for content in contents %}
+            <div class="panel m-t-20">
+                <h3 class="text-center">{{content.title}}</h3>
+                <div class="article-info m-t-20 flex-justify-c">
+                    作者：<span class="articel-author">{{content.user.username}}</span>
+                    时间：<span class="article-addTime">{{content.addTime|date('Y-m-d H:i:s',-8*60)}}</span>
+                    阅读：<span class="article-views">{{content.views}}</span>
+                    评论：<span class="article-comments">10</span>
+                </div>
+                <div class="article-description m-t-20">
+                    {{content.description}}
+                </div>
+                <span class="btn btn-warning m-t-20 readArticle f-r"><a class="dis-inline-block" href="/view?content_id={{content._id.toString()}}">阅读全文</a></span>
+                <div class="clearfix"></div>
+            </div>
+            {% endfor %}
+        </div>
+        <ul class="flex-justify-b">
+            <li>
+                {% if page >1 %}
+                <a href='/?category={{category}}&page={{page-1}}'>&laquo;上一页	</a>
+                {% endif %}
+            </li>
+            {% if page>0 %}
+            <li>
+                <strong>{{page}}/{{pages}}</strong>
+            </li>
+            {% endif %}
+            <li>
+                {% if page !== pages %}
+                <a href='/?category={{category}}&page={{page+1}}'>下一页	&raquo;</a>
+                {% endif %}
+            </li>
+        </ul>
     </div>
     <div class="col-xs-3">
         {% if user._id %}

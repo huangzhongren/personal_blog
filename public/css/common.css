@@ -3,11 +3,25 @@ ul,li,form {
     border:0;
     margin: 0;
 }
-.f-r {
-    float: right;
+body {
+    font-size: 16px!important;
+    background: url('/img/bg.jpg');
 }
-.f-l {
-    float: left;
+body.read-song-font {
+    font-family: Georgia,Times New Roman,Times,Songti SC,serif;
+}
+body.read-black-font {
+    font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+}
+ul,li {
+    list-style: none;
+}
+h1,h2,h3,h4,h5,h6 {
+    color: #333;
+}
+/*链接样式*/
+a:hover {
+    color: #696a52!important;
 }
 .focus {
     cursor: pointer;
@@ -27,4 +41,69 @@ ul,li,form {
 /*公共颜色*/
 .blue {
     color: #39c;
+}
+/*margin padding border*/
+
+.m-t-20 {
+    margin-top: 20px;
+}
+.m-t-30 {
+    margin-top: 30px;
+}
+.b-d-b {
+    border-bottom: 1px dashed #000;
+}
+/*右侧竖线*/
+.vertical-line {
+    border-right: 1px solid
+}
+/*弹性盒子*/
+.flex-justify-b {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-justify-a {
+    display: flex;
+    justify-content: space-around;
+}
+.flex-justify-c {
+    display: flex;
+    justify-content: center;
+}
+    /*导航样式*/
+.navbar-brand {
+    margin: 0 16px;
+}
+.navbar-brand.active{
+    border-bottom: 2px solid #f0ad4e
+}
+.navbar-brand:hover{
+    border-bottom: 2px solid #f0ad4e
+}
+/*首页查看更多*/
+.readArticle a{
+    color: #fff;
+}
+/*行内块元素*/
+.dis-inline-block {
+    display: inline-block;
+}
+/*字体*/
+.font-small {
+    font-size: 14px;
+}
+/*浮动*/
+.f-r {
+    float: right;
+}
+.f-l {
+    float: left;
+}
+/*子元素左浮*/
+.ch-f-l>*{
+    float: left
+}
+/*面板样式*/
+.panel {
+    padding: 20px;
 }

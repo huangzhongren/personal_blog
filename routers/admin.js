@@ -3,6 +3,8 @@
  */
 
 var router = require('express').Router();
+
+var nodeExcel = require('excel-export')
 var User = require('../models/user.js');
 var Category = require('../models/category.js');
 var Content = require('../models/contents.js');
@@ -232,14 +234,16 @@ router.get('/category/delete',function(req,res){
 * */
 router.get('/content',function(req,res){
     var page = Number(req.query.page || 1);
-    var limit = 4;
+    var limit = 8;
     var pages = 0;
     Content.count().then(function(count){
         pages = Math.ceil(count/limit);
         page = Math.min(page,pages);
         page = Math.max(page,1);
         var skip = (page-1)*limit;
-        Content.find().limit(limit).skip(skip).then(function(contents){
+        Content.find().limit(limit).skip(skip).populate(['category','user']).sort({
+            addTime:-1
+        }).then(function(contents){
             res.render('admin/content_index',{
                 user:req.session.user,
                 contents:contents,
@@ -291,7 +295,8 @@ router.post('/content/add',function(req,res){
         category: req.body.category,
         title: req.body.title,
         description: req.body.description,
-        content: req.body.content
+        content: req.body.content,
+        user:req.session.user._id.toString()
     }).save().then(function(rs){
         if(rs){
             res.render('admin/success',{
@@ -303,4 +308,125 @@ router.post('/content/add',function(req,res){
     })
 
 })
+/*
+* 内容修改
+* */
+
+router.get('/content/modify',function(req,res){
+    var id = req.query.id||'';
+    var categories = [];
+    Category.find().sort({_id:-1}).then(function(rs){
+        categories = rs
+        return Content.findOne({
+            _id:id,
+        }).populate('category')
+    }).then(function(content){
+        console.log(content)
+        if(content){
+            res.render('admin/content_edit',{
+                user:req.session.user,
+                content:content,
+                categories:categories
+            })
+        }else {
+            res.render('admin/error.html',{
+                user:req.session.user,
+                message:'指定内容不存在'
+            })
+            return Promise.rejcet();
+        }
+    })
+
+})
+/*
+* 内容修改保存
+* */
+router.post('/content/modify',function(req,res){
+    var id = req.query.id||'';
+    if(req.body.category == ''){
+        res.render('admin/error',{
+            user: req.session.user,
+            message:'内容分类不能为空'
+        })
+        return;
+    }
+    if(req.body.title == ''){
+        res.render('admin/error',{
+            user: req.session.user,
+            message:'内容标题不能为空'
+        })
+        return;
+    }
+    Content.update({
+        _id:id
+    },{
+        category:req.body.category,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content
+    }).then(function(){
+        res.render('admin/success',{
+            user: req.session.user,
+            message:'内容保存成功',
+            url:'/admin/content/modify?id='+id
+        })
+    })
+})
+/*
+* 内容删除
+* */
+router.get('/content/delete',function(req,res){
+    var id = req.query.id||'';
+    Content.remove({
+        _id:id
+    }).then(function(){
+        res.render('admin/success',{
+            user:req.session.user,
+            message:'删除成功',
+            url:'/admin/content'
+        })
+    })
+})
+/*
+* 导出用户数据
+* */
+router.get('/exportExcel',function(req,res){
+    User.find().limit(200).then(function(result){
+        var conf = {};
+        conf.name = 'mysheet';
+        conf.cols = [{
+            caption:'ID',
+            type:'string'
+        },{
+            caption:'用户名',
+            type:'string'
+        },{
+            caption:'密码',
+            type:'string'
+        },{
+            caption:'是否是管理员',
+            type:'boolean'
+        }]
+        var users =new Array();
+        result.forEach(function(user,index){
+            var userInfo = user['_doc'];
+            var userArr = [];
+            for(var key in userInfo){
+                if(userInfo.hasOwnProperty(key)){
+                    console.log(key)
+                    if(key!=='__v'){
+                        userArr.push(userInfo[key])//还没有进行排序
+                    }
+                }
+            }
+            users.push(userArr);
+        })
+        conf.rows = users;
+        var excel = nodeExcel.execute(conf)
+        res.setHeader('Content-Type','application/vnd.openxmlformats');
+        res.setHeader('Content-Disposition','attachment;filename='+'export.xlsx');
+        res.end(excel,'binary')
+    })
+})
+
 module.exports = router;

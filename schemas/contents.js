@@ -13,7 +13,7 @@ var contentSchema = new mongoose.Schema({
     category: {
         type:mongoose.Schema.Types.ObjectId,
         //引用
-        ref:'Content'
+        ref:'Category'
     },
     //内容简介
     description: {
@@ -24,6 +24,27 @@ var contentSchema = new mongoose.Schema({
     content: {
         type:String,
         default:''
+    },
+    //关联字段 - 用户id
+    user: {
+        type:mongoose.Schema.Types.ObjectId,
+        //引用
+        ref:'User'
+    },
+    //添加时间
+    addTime:{
+        type:Date,
+        default: new Date()
+    },
+    //阅读量
+    views:{
+        type:Number,
+        default:0
+    },
+    //评论
+    comments:{
+        type:Array,
+        dafault:[]
     }
 
 });
