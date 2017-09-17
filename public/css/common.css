@@ -1,4 +1,4 @@
-ul,li,form {
+ol,ul,li,form {
     padding:0;
     border:0;
     margin: 0;
@@ -19,9 +19,16 @@ ul,li {
 h1,h2,h3,h4,h5,h6 {
     color: #333;
 }
+textarea {
+    resize: none;
+}
 /*链接样式*/
-a:hover {
+a:focus,a:hover {
     color: #696a52!important;
+    text-decoration: none!important;
+}
+a {
+    color: #333!important;
 }
 .focus {
     cursor: pointer;
@@ -53,6 +60,9 @@ a:hover {
 .b-d-b {
     border-bottom: 1px dashed #000;
 }
+.b-s-l {
+    border-left: 2px solid #ccc
+}
 /*右侧竖线*/
 .vertical-line {
     border-right: 1px solid
@@ -70,15 +80,16 @@ a:hover {
     display: flex;
     justify-content: center;
 }
-    /*导航样式*/
+/*导航样式*/
 .navbar-brand {
     margin: 0 16px;
 }
-.navbar-brand.active{
-    border-bottom: 2px solid #f0ad4e
+.navbar-default .navbar-nav li.active>a {
+    background: none;
+    border-bottom: 2px solid #f0ad4e;
 }
-.navbar-brand:hover{
-    border-bottom: 2px solid #f0ad4e
+.navbar-default .navbar-nav li:hover a {
+    border-bottom: 2px solid #f0ad4e;
 }
 /*首页查看更多*/
 .readArticle a{
@@ -91,6 +102,12 @@ a:hover {
 /*字体*/
 .font-small {
     font-size: 14px;
+}
+/*文本溢出省略*/
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
 }
 /*浮动*/
 .f-r {
@@ -106,4 +123,20 @@ a:hover {
 /*面板样式*/
 .panel {
     padding: 20px;
+}
+/*文章记录*/
+.article-records li {
+    padding: 5px;
+}
+
+/*媒体查询*/
+@media  screen and (max-width:992px) {
+    html {
+        font-size: 14px;
+    }
+}
+@media  screen and (max-width:768px) {
+    html {
+        font-size: 12px;
+    }
 }

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
@@ -14,7 +15,7 @@
 <body class="read-song-font" lang="zh-CN">
 <h1>鲍磊的个人博客</h1>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -29,15 +30,27 @@
             {% else %}
             <a class="navbar-brand" href="/">首页</a>
             {% endif %}
-            {% for cate in categories %}
-                {% if category==cate._id.toString() %}
-                <a class="navbar-brand active" href="/?category={{cate._id.toString()}}">{{cate.name}}</a>
-                {% else %}
-                <a class="navbar-brand" href="/?category={{cate._id.toString()}}">{{cate.name}}</a>
-                {% endif %}
-            {% endfor %}
         </div>
-
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% for cate in categories %}
+                    {% if category==cate._id.toString() %}
+                    <li class="active"><a href="/?category={{cate._id.toString()}}">{{cate.name}}</a></li>
+                    {% else %}
+                    <li><a href="/?category={{cate._id.toString()}}">{{cate.name}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <!--<form class="navbar-form navbar-left">-->
+                <!--<div class="input-group flex-justify-b">-->
+                    <!--<input type="text" class="form-control" placeholder="站内搜索" aria-describedby="basic-addon">-->
+                    <!--<span class="input-group-addon" id="basic-addon"><a href="#">Go</a></span>-->
+                <!--</div>-->
+            <!--</form>-->
+            <ul class="nav navbar-nav navbar-right">
+                <li aria-label="后台管理"><a><span class="glyphicon glyphicon-cog dis-inline-block" aria-hidden="true"></span></a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 

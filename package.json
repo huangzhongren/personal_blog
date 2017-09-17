@@ -18,7 +18,8 @@
     "markdown": "^0.5.0",
     "mongoose": "^4.11.7",
     "n": "^0.7.0",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "ueditor": "^1.2.3"
   },
   "devDependencies": {
     "lodash": "^4.17.4"

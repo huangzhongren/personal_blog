@@ -29,7 +29,7 @@ router.use(function(req,res,next){
 * */
 router.get('/',function(req,res,next){
 
-    data = _.assign(data,{
+    data = _.assign(data,{//合并对象
         limit: 4,
         pages: 0,
         page: req.query.page||'',
@@ -64,6 +64,7 @@ router.use('/view',function(req,res,next){
         _id:content_id
     }).populate(['user','category']).then(function(content){
         data.content = content;
+
         if(req.url.split('?')[0]=='/'){
             content.views++;
             content.save();
@@ -72,8 +73,13 @@ router.use('/view',function(req,res,next){
     })
 })
 router.get('/view',function(req,res){
-    res.render('main/view',data)
-
+    //查询最近10条数据用于显示
+    Content.find().sort({
+        _id: -1
+    }).limit(10).then(function(rs){
+        data.recentRecord = rs;
+        res.render('main/view',data)
+    })
 })
 /*评论模块*/
 router.get('/view/comments',function(req,res){

@@ -6,3 +6,7 @@
     border-radius: 8px;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, .5), -1px 0px 1px rgba(0, 0, 0, .5)
 }
+/*侧边栏部分样式*/
+.side-bar-title {
+    font-weight: bold;
+}

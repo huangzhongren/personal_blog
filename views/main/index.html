@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block main %}
 <div class="container">
-    <div class="col-xs-9">
+    <div class="col-xs-12 col-md-9">
         <div class="article-box row">
             {% for content in contents %}
             <div class="panel m-t-20">
@@ -38,18 +38,18 @@
             </li>
         </ul>
     </div>
-    <div class="col-xs-3">
+    <div class="col-xs-12 col-md-3">
         {% if user._id %}
         <div class="authentication admin">
-            <h2>上午好！<span>{{user.username}}</span></h2>
+            <h3>上午好！<span>{{user.username}}</span></h3>
             {% if user.isAdmin %}
             <h5>您是管理员点击<a href="/admin">这里</a>进入</h5>
             {% endif %}
         </div>
         {% else %}
         <div class="authentication login">
-            <h2>登录</h2>
-            <div class="col_warning"></div>
+            <h3>登录</h3>
+            <div class="col_warning hide"></div>
             <div class="input-group">
                 <label>用户名:</label>
                 <input type="text" name="username">
@@ -62,8 +62,8 @@
             <h5>还没注册？<span class="blue focus go_regist">注册</span></h5>
         </div>
         <div class="authentication regist" hidden>
-            <h2>注册</h2>
-            <div class="col_warning"></div>
+            <h3>注册</h3>
+            <div class="col_warning hide"></div>
             <div class="input-group">
                 <label>用户名:</label>
                 <input type="text" name="username">
@@ -81,5 +81,6 @@
         </div>
         {%  endif %}
     </div>
+    <div class="clearfix"></div>
 </div>
 {% endblock %}

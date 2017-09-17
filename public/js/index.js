@@ -23,7 +23,7 @@ $(function(){
                 repassword:registerBox.find('[name="repassword"]').val(),
             },
             success: function(json){
-                registerBox.find('.col_warning').html(json.message);
+                registerBox.find('.col_warning').html(json.message).show();
                 if(!json.code){
                     setTimeout(function(){
                         $('.login').show();
@@ -46,7 +46,7 @@ $(function(){
             },
             dataType:'json',
             success: function(json){
-                loginBox.find('.col_warning').html(json.message)
+                loginBox.find('.col_warning').html(json.message).show()
                 if(!json.code){
                     setTimeout(function(){
                         location.reload();
