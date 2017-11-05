@@ -5,17 +5,23 @@
 var router = require('express').Router();
 
 var nodeExcel = require('excel-export')
-var User = require('../models/user.js');
-var Category = require('../models/category.js');
-var Content = require('../models/contents.js');
+var User = require('../../models/user.js');
+var Category = require('../../models/category.js');
+var Content = require('../../models/contents.js');
+
+
+//路由拦截
 
 router.use(function(req,res,next){
-    if(!req.session.user.isAdmin){
+    if(!req.session.user){//未登录
+        return res.redirect('/login');
+    }else if(!req.session.user.isAdmin){
         res.send('对不起，只有管理员才能进入后台管理');
         return;
     }
     next();
 })
+
 router.get('/',function(req,res,next){
     res.render('admin/index',{
         user: req.session.user

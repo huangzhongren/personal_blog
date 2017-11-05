@@ -3,8 +3,8 @@
  */
 
 var router = require('express').Router();
-var User = require('../models/user');
-var Content = require('../models/Contents')
+var User = require('../../models/user');
+var Content = require('../../models/Contents')
 //定义统一返回格式
 var responseData;
 router.use(function(req,res,next){

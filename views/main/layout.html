@@ -32,7 +32,7 @@
             {% endif %}
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav nav-menu">
                 {% for cate in categories %}
                     {% if category==cate._id.toString() %}
                     <li class="active"><a href="/?category={{cate._id.toString()}}">{{cate.name}}</a></li>
@@ -48,7 +48,24 @@
                 <!--</div>-->
             <!--</form>-->
             <ul class="nav navbar-nav navbar-right">
-                <li aria-label="后台管理"><a><span class="glyphicon glyphicon-cog dis-inline-block" aria-hidden="true"></span></a></li>
+                <!--<li aria-label="后台管理"><a><span class="glyphicon glyphicon-cog dis-inline-block" aria-hidden="true"></span></a></li>-->
+                {% if user %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>嗨，</span>{{user.username}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">上传头像</a></li>
+                        <li><a href="#">修改账户信息</a></li>
+                        <li><a href="/api/user/logout">登出</a></li>
+                        <li role="separator" class="divider"></li>
+                        {% if user.isAdmin %}
+                        <li><a href="/admin">进入后台管理</a></li>
+                        {% endif%}
+                    </ul>
+                </li>
+                {% else %}
+                <li aria-label="login"><a href="/login" id="login">登录</a></li>
+                <li aria-label="register"><a href="/register" id="register">注册</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

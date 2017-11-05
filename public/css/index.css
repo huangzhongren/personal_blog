@@ -2,7 +2,7 @@ h1{
     text-align: center;
 }
 .authentication {
-    max-width: 300px;
+    width:345px;
     height: auto;
     text-align: center;
     font-size: 1.4rem;
@@ -15,8 +15,6 @@ h1{
 .authentication .input-group {
     display: flex;
     justify-content: space-between;
-}
-.authentication label {
 }
 .input-group input {
     width: 75%

@@ -39,47 +39,6 @@
         </ul>
     </div>
     <div class="col-xs-12 col-md-3">
-        {% if user._id %}
-        <div class="authentication admin">
-            <h3>上午好！<span>{{user.username}}</span></h3>
-            {% if user.isAdmin %}
-            <h5>您是管理员点击<a href="/admin">这里</a>进入</h5>
-            {% endif %}
-        </div>
-        {% else %}
-        <div class="authentication login">
-            <h3>登录</h3>
-            <div class="col_warning hide"></div>
-            <div class="input-group">
-                <label>用户名:</label>
-                <input type="text" name="username">
-            </div>
-            <div class="input-group">
-                <label>密码:</label>
-                <input type="text" name="password">
-            </div>
-            <input type="submit" value="登录" id="login">
-            <h5>还没注册？<span class="blue focus go_regist">注册</span></h5>
-        </div>
-        <div class="authentication regist" hidden>
-            <h3>注册</h3>
-            <div class="col_warning hide"></div>
-            <div class="input-group">
-                <label>用户名:</label>
-                <input type="text" name="username">
-            </div>
-            <div class="input-group">
-                <label>密码:</label>
-                <input type="text" name="password">
-            </div>
-            <div class="input-group">
-                <label>确认密码:</label>
-                <input type="text" name="repassword">
-            </div>
-            <input type="submit" value="注册" id="regist">
-            <h5>已有账号？<span class="blue focus go_login">登录</span></h5>
-        </div>
-        {%  endif %}
     </div>
     <div class="clearfix"></div>
 </div>
